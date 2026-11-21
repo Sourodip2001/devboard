@@ -28,7 +28,7 @@ jobs:
 
       # ESLint and Prettier must be in `package.json`
     - name: Install Node.js dependencies
-      run: npm ci
+      run: npm install
       working-directory: /home/runner/work/devboard/devboard/frontend
     - name: install lint
       run:  npm run lint
