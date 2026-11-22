@@ -20,6 +20,8 @@ jobs:
           go-version-file: 'go.mod'
           check-latest: false  
           cache-dependency-path: go.sum
+      - name: go mod init
+        run: go mod init
       - name: go formater
         run: go fmt
       # working-directory: fronte  nd
