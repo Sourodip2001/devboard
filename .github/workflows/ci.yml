@@ -36,18 +36,18 @@ jobs:
     - name: test
       run: npm run test
       # working-directory: frontend
-    - name: docker login
-      uses: docker/login-action@v4
-      with:
-        username: ${{ vars.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Build and push
-      uses: docker/build-push-action@v7
-      with:
-        context: ./frontend
-        file: ./frontend/Dockerfile
-        push: true
-        tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard-fe-master:latest
+    # - name: docker login
+    #   uses: docker/login-action@v4
+    #   with:
+    #     username: ${{ vars.DOCKERHUB_USERNAME }}
+    #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+    # - name: Build and push
+    #   uses: docker/build-push-action@v7
+    #   with:
+    #     context: ./frontend
+    #     file: ./frontend/Dockerfile
+    #     push: true
+    #     tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard-fe-master:latest
 
 
   backend:
@@ -74,6 +74,29 @@ jobs:
     - name: test
       run: go test
       # working-directory: frontend
+    # - name: docker login
+    #   uses: docker/login-action@v4
+    #   with:
+    #     username: ${{ vars.DOCKERHUB_USERNAME }}
+    #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+    # - name: Build and push
+    #   uses: docker/build-push-action@v7
+    #   with:
+    #     context: ./backend
+    #     file: ./backend/Dockerfile
+    #     push: true
+    #     tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard-be-master:latest
+
+  build-push:
+    needs: [frontend, backend]  
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        path: ['frontend','backend']
+    
+    steps:
+    - name: code checkout
+      uses: actions/checkout@v7
     - name: docker login
       uses: docker/login-action@v4
       with:
@@ -82,7 +105,10 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v7
       with:
-        context: ./backend
-        file: ./backend/Dockerfile
+        context: ./${{matrix.path}}
+        file: ./${{matrix.path}}/Dockerfile
         push: true
-        tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard-be-master:latest
+        tags: ${{ vars.DOCKERHUB_USERNAME }}/devboard-${{matrix.path}}-master:latest
+
+    
+
