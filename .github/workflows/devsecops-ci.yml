@@ -1,0 +1,11 @@
+name: devsecops ci
+on:
+  push:
+    branches:
+      - master
+
+jobs: 
+  code-quality: 
+      uses: ./.github/workflows/code-qlty.yml
+  
+   
