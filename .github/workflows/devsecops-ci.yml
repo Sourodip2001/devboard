@@ -9,5 +9,7 @@ jobs:
     uses: ./.github/workflows/code-qlty.yml
   secret-scanning:
     uses: ./.github/workflows/secret-scanning.yml
+  dependecy-check: 
+    uses: ./.github/workflows/dependency.yml
   
    

@@ -1,0 +1,47 @@
+name: dependency Scanning
+on:
+  workflow_call:
+jobs:
+  dependency-scan-go:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: code checkout 
+        uses: actions/checkout@v7
+      - name: seup go
+        uses: actions/setup-go@v6
+        with:
+          go-version: '1.26'
+          go-version-file: 'go.mod'
+          check-latest: false  
+          cache-dependency-path: go.sum
+      - name: install govulncheck
+        run: go install golang.org/x/vuln/cmd/govulncheck@v1.1.4
+      - name: go vul check 
+        run: govulncheck ./... 
+        working-directory: backend
+
+  dependency-check-node: 
+    runs-on: ubuntu-latest
+    defaults: 
+      run: 
+        working-directory: frontend 
+    steps: 
+    - name: Checkout code 
+      uses: actions/checkout@v7 
+    - name: Setup Node.js 
+      uses: actions/setup-node@v7
+      with:
+        node-version-file: "18.x"
+    - name: Fix Vite React dependency
+      run: |
+          npm uninstall @vitejs/plugin-react
+          npm install -D @vitejs/plugin-react@^6.3.0
+    - name: install packeages
+      run: npm install 
+    - name: run npm audit
+      run: npm audit 
+      working-directory: frontend
+    
