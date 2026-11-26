@@ -12,7 +12,7 @@ jobs:
     - name: code checkout 
       uses: actions/checkout@v7
     - name: seup nodejs
-      uses: actions/setup-${{ languages }}@v6
+      uses: actions/setup-${{ matrix.languages }}@v6
       with:
         node-version: '20'
         cache: 'npm'
@@ -22,7 +22,7 @@ jobs:
     - name: run linter
       run: npm run lint  
     - name: seup go
-      uses: actions/setup-${{ languages }}@v6
+      uses: actions/setup-${{ matrix.languages }}@v6
       with:
         go-version: '1.26'
         go-version-file: 'go.mod'
