@@ -21,7 +21,7 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build docker ${{ matrix.folders }}
-        run: docker build -d ${{ vars.DOCKERHUB_USERNAME }}/devboard-${{ matrix.folders }}:latest .
+        run: docker build -t ${{ vars.DOCKERHUB_USERNAME }}/devboard-${{ matrix.folders }}:latest .
         working-directory: ${{ matrix.folders }}
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@v0.36.0
