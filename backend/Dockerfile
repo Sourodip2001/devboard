@@ -1,6 +1,6 @@
 FROM dhi.io/golang:1-alpine AS builder
 
-WORKDIR /app
+WORKDIRR /app
 
 COPY go.mod go.sum ./
 RUN go mod download
