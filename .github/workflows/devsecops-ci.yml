@@ -11,5 +11,7 @@ jobs:
     uses: ./.github/workflows/secret-scanning.yml
   dependecy-check: 
     uses: ./.github/workflows/dependency.yml
+  docker-checks: 
+    uses: ./.github/workflows/docker.yml
   
    
