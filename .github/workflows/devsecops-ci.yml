@@ -13,5 +13,7 @@ jobs:
     uses: ./.github/workflows/dependency.yml
   docker-checks: 
     uses: ./.github/workflows/docker.yml
+    secrets: inherit
+
   
    
